@@ -418,13 +418,19 @@ window.generalPurposeLabelingWidget = (function () {
     };
 
     _createRemoveDialog = function () {
-        var removeDialog = document.createElement('dialog');
+
+    	removeDialog = document.createElement('div');
         removeDialog.id = 'dlgRemove';
+        removeDialog.className = 'modal fade in modal-dialog';
+
+        removeContent = document.createElement('div')
+        removeContent.className = 'modal-content';
+        removeDialog.appendChild(removeContent);
 
         var removeDialogText = document.createElement('div');
         removeDialogText.innerHTML = '';
         removeDialogText.id = 'dlgRemoveText';
-        removeDialog.appendChild(removeDialogText);
+        removeContent.appendChild(removeDialogText);
 
 
         var removeDialogButtonKeep = document.createElement('button');
@@ -432,14 +438,13 @@ window.generalPurposeLabelingWidget = (function () {
         removeDialogButtonKeep.onclick = function () {
             $('#dlgRemove').modal('hide');
         };
-        removeDialog.appendChild(removeDialogButtonKeep);
+        removeContent.appendChild(removeDialogButtonKeep);
 
         var removeDialogButtonAccept = document.createElement('button');
         removeDialogButtonAccept.innerHTML = 'Remove';
         removeDialogButtonAccept.id = 'btnRemove';
         removeDialogButtonAccept.onclick = function () {
             var select = document.getElementById('slcClassesEdit');
-            debugger;
             var classes = [...select.options].filter(option => option.selected).map(option => option.value);
             labeledCards = _filterData(classes.join('|'));
             classes.forEach(function (className) {
@@ -463,7 +468,7 @@ window.generalPurposeLabelingWidget = (function () {
             document.getElementById('btnRemoveLabelClass').hidden = true;
             $('#dlgRemove').modal('hide');
         };
-        removeDialog.appendChild(removeDialogButtonAccept);
+        removeContent.appendChild(removeDialogButtonAccept);
 
         return removeDialog;
     };
